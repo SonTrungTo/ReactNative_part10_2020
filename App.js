@@ -5,7 +5,7 @@ import { StyleSheet, Text, View } from 'react-native';
 export default function App() {
   return (
     <View style={styles.container}>
-      <Text>You shouldn't make me angry! 'Anakin Skywalker'</Text>
+      <Text>You shouldn`&apos;`t make me angry! `&apos;`Anakin Skywalker`&apos;`</Text>
       <StatusBar style="auto" />
     </View>
   );
