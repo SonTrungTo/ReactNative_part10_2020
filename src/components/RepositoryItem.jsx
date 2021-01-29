@@ -10,7 +10,8 @@ const styles = StyleSheet.create({
         padding: 20
     },
     basic: {
-        flexDirection: 'row'
+        flexDirection: 'row',
+        marginBottom: 25
     },
     avatarSize: {
         width: 60,
@@ -60,8 +61,8 @@ ownerAvatarUrl }) => {
             </View>
             <View style={styles.status}>
                 <View style={{ flexDirection: 'column' }}>
-                    <Text>{forksCount}</Text>
-                    <Text>Forks</Text>
+                    <Text fontWeight="bold" fontSize="subheading">{forksCount >= 1000 ? Number(forksCount / 1000).toFixed(1) + 'k' : forksCount}</Text>
+                    <Text color="textSecondary" fontSize="subheading">Forks</Text>
                 </View>
                 <Text>{stargazersCount} Stars</Text>
                 <Text>{reviewCount} Reviews</Text>
