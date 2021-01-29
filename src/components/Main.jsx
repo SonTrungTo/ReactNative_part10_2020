@@ -1,16 +1,15 @@
 import React from "react";
-import { View, StyleSheet, SafeAreaView } from "react-native";
+import { View, StyleSheet } from "react-native";
 import RepositoryList from "./RepositoryList";
 
 import AppBar from "./AppBar";
+import theme from "./theme";
 
 const styles = StyleSheet.create({
     container: {
         flexGrow: 1,
-        flexShrink: 1
-    },
-    repositoryList: {
-        marginTop: 20
+        flexShrink: 1,
+        backgroundColor: theme.colors.mainBackgroundColor
     }
 });
 
@@ -18,9 +17,7 @@ const Main = () => {
     return (
         <View style={styles.container}>
             <AppBar />
-            <SafeAreaView style={styles.repositoryList}>
-                <RepositoryList />
-            </SafeAreaView>
+            <RepositoryList />
         </View>
     );
 };
