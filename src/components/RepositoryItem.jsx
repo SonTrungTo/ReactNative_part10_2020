@@ -13,9 +13,10 @@ const styles = StyleSheet.create({
         flexDirection: 'row'
     },
     avatarSize: {
-        width: 80,
-        height: 80,
-        flexGrow: 0
+        width: 60,
+        height: 60,
+        flexGrow: 0,
+        borderRadius: 5
     },
     description: {
         flexGrow: 1,
@@ -25,6 +26,14 @@ const styles = StyleSheet.create({
     status: {
         flexDirection: 'row',
         justifyContent: 'space-around'
+    },
+    badge: {
+        borderStyle: 'solid',
+        backgroundColor: theme.colors.primary,
+        borderRadius: 5,
+        textAlign: 'center',
+        padding: 5,
+        flexGrow: 0
     }
 });
 
@@ -43,15 +52,20 @@ ownerAvatarUrl }) => {
                 />
                 <View style={styles.description}>
                     <Text fontWeight="bold" fontSize="subheading">{fullName}</Text>
-                    <Text color="textSecondary">{description}</Text>
-                    <Text>{language}</Text>
+                    <Text color="textSecondary" style={{marginTop: 5}}>{description}</Text>
+                    <View style={{ flexDirection: 'row', marginTop: 15 }}>
+                        <Text color="textBar" style={styles.badge}>{language}</Text>
+                    </View>
                 </View>
             </View>
             <View style={styles.status}>
-                <Text>Forks: {forksCount}</Text>
-                <Text>Stars: {stargazersCount}</Text>
-                <Text>Reviews: {reviewCount}</Text>
-                <Text>Rating: {ratingAverage}</Text>
+                <View style={{ flexDirection: 'column' }}>
+                    <Text>{forksCount}</Text>
+                    <Text>Forks</Text>
+                </View>
+                <Text>{stargazersCount} Stars</Text>
+                <Text>{reviewCount} Reviews</Text>
+                <Text>{ratingAverage} Rating</Text>
             </View>
         </View>
     );
