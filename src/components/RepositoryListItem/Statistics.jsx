@@ -10,6 +10,12 @@ const styles = StyleSheet.create({
     },
     statistic: {
         flexDirection: 'column'
+    },
+    numericValue: {
+        textAlign: 'center'
+    },
+    textualDescription: {
+        textAlign: 'center'
     }
 });
 
@@ -20,7 +26,8 @@ const Statistics = (props) => {
                 <View key={stat} style={styles.statistic}>
                     <Text
                     fontWeight='bold'
-                    fontSize='subheading'>
+                    fontSize='subheading'
+                    style={styles.numericValue}>
                     {
                     props[stat] >= 1000 ?
                         Number(props[stat] / 1000).toFixed(1) + 'k' :
@@ -29,7 +36,8 @@ const Statistics = (props) => {
                     </Text>
                     <Text
                     color='textSecondary'
-                    fontSize='subheading'>
+                    fontSize='subheading'
+                    style={styles.textualDescription}>
                         { stat }
                     </Text>
                 </View>
