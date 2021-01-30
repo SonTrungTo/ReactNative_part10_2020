@@ -2,17 +2,13 @@ import React from "react";
 import { View, StyleSheet } from "react-native";
 
 import theme from "./theme";
-import Text from "./Text";
 import Description from "./RepositoryListItem/Description";
+import Statistics from "./RepositoryListItem/Statistics";
 
 const styles = StyleSheet.create({
     container: {
         backgroundColor: theme.colors.itemBackgroundColor,
         padding: 20
-    },
-    status: {
-        flexDirection: 'row',
-        justifyContent: 'space-around'
     }
 });
 
@@ -28,15 +24,12 @@ ownerAvatarUrl }) => {
                 language={language}
                 ownerAvatarUrl={ownerAvatarUrl}
             />
-            <View style={styles.status}>
-                <View style={{ flexDirection: 'column' }}>
-                    <Text fontWeight="bold" fontSize="subheading">{forksCount >= 1000 ? Number(forksCount / 1000).toFixed(1) + 'k' : forksCount}</Text>
-                    <Text color="textSecondary" fontSize="subheading">Forks</Text>
-                </View>
-                <Text>{stargazersCount} Stars</Text>
-                <Text>{reviewCount} Reviews</Text>
-                <Text>{ratingAverage} Rating</Text>
-            </View>
+            <Statistics
+                Stars={stargazersCount}
+                Forks={forksCount}
+                Reviews={reviewCount}
+                Rating={ratingAverage}
+            />
         </View>
     );
 };
