@@ -1,7 +1,8 @@
 import React from "react";
 import { View, StyleSheet } from "react-native";
-import RepositoryList from "./RepositoryList";
+import { Switch, Route, Redirect } from 'react-router-native';
 
+import RepositoryList from "./RepositoryList";
 import AppBar from "./AppBar";
 import theme from "./theme";
 
@@ -17,7 +18,12 @@ const Main = () => {
     return (
         <View style={styles.container}>
             <AppBar />
-            <RepositoryList />
+            <Switch>
+                <Route path='/' exact>
+                    <RepositoryList />
+                </Route>
+                <Redirect to='/' />
+            </Switch>
         </View>
     );
 };
