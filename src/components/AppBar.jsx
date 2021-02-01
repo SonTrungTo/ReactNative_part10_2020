@@ -1,5 +1,5 @@
 import React from "react";
-import { View, StyleSheet, ScrollView, Dimensions } from "react-native";
+import { View, StyleSheet, ScrollView } from "react-native";
 import Constants from "expo-constants";
 
 import theme from "./theme";
@@ -16,7 +16,7 @@ const styles = StyleSheet.create({
     scrollView: {
         flexGrow: 1,
         justifyContent: 'space-around',
-        width: 750
+        width: 600
     }
 });
 
