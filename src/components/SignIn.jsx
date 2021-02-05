@@ -3,6 +3,7 @@ import { View, TouchableWithoutFeedback,
     StyleSheet } from "react-native";
 
 import { Formik } from "formik";
+import * as yup from "yup";
 
 import Text from "./Text";
 import FormikTextInput from "./FormikTextInput";
@@ -12,6 +13,21 @@ const initialValues = {
     username: '',
     password: ''
 };
+
+const validationSchema = yup.object().shape({
+    username: yup
+    .string()
+    .min(3, 'Username too short')
+    .max(50, 'Username too long')
+    .required('Username is required!'),
+    password: yup
+    .string()
+    .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!#%?$@&=]).{8,}$/,
+    'Password must contain 1 digit, ' +
+    '1 lowercase letter(a-z), 1 uppercase letter(A-Z), ' +
+    'and 1 special character(!#%?$"&=) and at least 8 characters long.')
+    .required('Password is required!')
+});
 
 const styles = StyleSheet.create({
     submitTouch: {
@@ -50,7 +66,8 @@ const SignIn = () => {
     };
 
     return (
-        <Formik initialValues={initialValues} onSubmit={onSubmit}>
+        <Formik initialValues={initialValues} onSubmit={onSubmit}
+        validationSchema={validationSchema}>
             {({ handleSubmit }) => {
                 return (
                     <SignInForm onSubmit={ handleSubmit } />

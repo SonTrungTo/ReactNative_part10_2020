@@ -11,12 +11,16 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         borderStyle: 'solid',
         borderWidth: 1
+    },
+    errorBorder: {
+        borderColor: theme.colors.error
     }
 });
 
-const TextInput = ({ style, ...props }) => {
+const TextInput = ({ style, error, ...props }) => {
     const styleTextInput = [
         styles.container,
+        error && styles.errorBorder,
         style
     ];
 

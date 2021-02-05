@@ -6,7 +6,8 @@ const theme = {
         primary: '#0366d6',
         appBarBackgroundColor: '#24292e',
         mainBackgroundColor: '#e1e4e8',
-        itemBackgroundColor: 'white'
+        itemBackgroundColor: 'white',
+        error: '#d73a4a'
     },
     fontSizes: {
         body: 14,
