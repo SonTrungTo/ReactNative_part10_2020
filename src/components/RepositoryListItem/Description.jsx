@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
 });
 
 const Description = ({ ownerAvatarUrl, 
-fullName, description, language }) => {
+fullName, description, language, languages }) => {
     return (
         <View style={styles.container}>
             <Avatar ownerAvatarUrl={ownerAvatarUrl} />
@@ -42,10 +42,23 @@ fullName, description, language }) => {
                 fontSize="subheading">{fullName}</Text>
                 <Text color="textSecondary"
                 style={styles.description}>{description}</Text>
+                { language &&
                 <View style={styles.language}>
                     <Text color="textBar"
                     style={styles.badge}>{language}</Text>
                 </View>
+                }
+                { languages &&
+                <View style={[styles.language, { justifyContent: 'space-between',
+                flexWrap: 'wrap' }]}>
+                    { languages.map(language =>
+                        <Text key={language} style={[styles.badge, { marginBottom: 5 }]}
+                        color="textBar">
+                            { language }
+                        </Text>)
+                    }
+                </View>
+                }
             </View>
         </View>
     );

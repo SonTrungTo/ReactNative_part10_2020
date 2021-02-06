@@ -26,7 +26,7 @@ const AppBar = () => {
             <ScrollView horizontal contentContainerStyle={styles.scrollView}>
                 <AppBarTab name="Repositories" to="/" />
                 <AppBarTab name="Sign In" to="/signin" />
-                <AppBarTab name="About Me" />
+                <AppBarTab name="About Me" to="/aboutme" />
             </ScrollView>
         </View>
     );
