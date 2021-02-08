@@ -13,3 +13,9 @@ export const BASIC_INFO = gql`
         language
     }
 `;
+
+export const ACCESS_TOKEN = gql`
+    fragment ACCESS_TOKEN on AuthorizationPayload {
+        accessToken
+    }
+`;
