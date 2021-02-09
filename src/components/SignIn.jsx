@@ -9,6 +9,7 @@ import Text from "./Text";
 import FormikTextInput from "./FormikTextInput";
 import theme from "./theme";
 import useSignIn from "../hooks/useSignIn";
+import AuthStorage from "../utils/authStorage";
 
 const initialValues = {
     username: '',
@@ -71,7 +72,10 @@ const SignIn = () => {
 
         try {
             const { data } = await signIn({ username, password });
-            console.log(data.authorize.accessToken);
+            const authStorage = new AuthStorage();
+            await authStorage.setAccessToken(data.authorize.accessToken);
+            console.log(await authStorage.getAccessToken());
+            await authStorage.removeAccessToken();
         } catch (e) {
             console.log(e);
         }
