@@ -9,7 +9,7 @@ const useSignIn = () => {
     const [mutate, result] = useMutation(AUTHORIZE, {
         onCompleted: async (data) => {
             await authStorage.setAccessToken(data.authorize.accessToken);
-            apolloClient.resetStore();
+            await apolloClient.resetStore();
         }
     });
 

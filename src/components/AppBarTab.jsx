@@ -15,16 +15,28 @@ const styles = StyleSheet.create({
 });
 
 
-const AppBarTab = ({ name, to }) => {
+const AppBarTab = ({ name, to, style, onSubmit, isButton }) => {
+    const appBarTabStyles = [
+        styles.appBarTab,
+        style
+    ];
+
     return (
-        <TouchableWithoutFeedback>
+        <TouchableWithoutFeedback onPress={onSubmit}>
+            { isButton ?
+            <Text fontWeight="bold"
+            color="textBar"
+            style={appBarTabStyles}>
+                {name}
+            </Text> :
             <Link to={to || '/'}>
                 <Text fontWeight="bold"
                 color="textBar"
-                style={styles.appBarTab}>
+                style={appBarTabStyles}>
                     {name}
                 </Text>
             </Link>
+            }
         </TouchableWithoutFeedback>
     );
 };

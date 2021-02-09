@@ -76,7 +76,6 @@ const SignIn = () => {
         try {
             await signIn({ username, password });
             console.log(await authStorage.getAccessToken());
-            await authStorage.removeAccessToken();
             history.push('/');
         } catch (e) {
             console.log(e);

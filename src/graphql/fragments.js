@@ -19,3 +19,10 @@ export const ACCESS_TOKEN = gql`
         accessToken
     }
 `;
+
+export const AUTHORIZED_USER = gql`
+    fragment AUTHORIZED_USER on User {
+        id
+        username
+    }
+`;
