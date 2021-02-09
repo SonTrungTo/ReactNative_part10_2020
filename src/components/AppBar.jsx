@@ -1,12 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { View, StyleSheet, ScrollView } from "react-native";
 import Constants from "expo-constants";
-import { useQuery } from "@apollo/react-hooks";
-import { GET_AUTHORIZED_USER } from "../graphql/queries";
 
 import theme from "./theme";
 import AppBarTab from "./AppBarTab";
 import useLogOut from "../hooks/useLogOut";
+import useAuthorizedUser from "../hooks/useAuthorizedUser";
 
 const styles = StyleSheet.create({
     container: {
@@ -28,16 +27,8 @@ const styles = StyleSheet.create({
 });
 
 const AppBar = () => {
-    const [authorizedUser, setAuthorizedUser] = useState(undefined);
-    const { data, loading } = useQuery(GET_AUTHORIZED_USER, {
-        fetchPolicy: 'cache-and-network'
-    });
+    const { authorizedUser } = useAuthorizedUser();
     const { logout } = useLogOut();
-    useEffect(() => {
-        if (!loading) {
-            setAuthorizedUser(data.authorizedUser);
-        }
-    }, [loading]);
 
     return (
         <View style={styles.container}>
