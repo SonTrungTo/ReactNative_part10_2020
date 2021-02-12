@@ -17,7 +17,7 @@ description, language, forksCount,
 stargazersCount, ratingAverage, reviewCount,
 ownerAvatarUrl }) => {
     return (
-        <View style={ styles.container } testID="mainItem">
+        <View style={ styles.container } testID="item">
             <Description
                 fullName={fullName}
                 description={description}

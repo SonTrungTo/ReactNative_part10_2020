@@ -23,7 +23,7 @@ const Statistics = (props) => {
     return (
         <View style={styles.container}>
             { Object.keys(props).map(stat => 
-                <View key={stat} style={styles.statistic}>
+                <View key={stat} style={styles.statistic} testID={stat}>
                     <Text
                     fontWeight='bold'
                     fontSize='subheading'

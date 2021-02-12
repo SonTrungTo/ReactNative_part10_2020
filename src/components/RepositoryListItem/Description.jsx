@@ -39,13 +39,13 @@ fullName, description, language, languages }) => {
             <Avatar ownerAvatarUrl={ownerAvatarUrl} />
             <View style={styles.content}>
                 <Text fontWeight="bold"
-                fontSize="subheading">{fullName}</Text>
+                fontSize="subheading" testID="fullname">{fullName}</Text>
                 <Text color="textSecondary"
-                style={styles.description}>{description}</Text>
+                style={styles.description} testID="description">{description}</Text>
                 { language &&
                 <View style={styles.language}>
                     <Text color="textBar"
-                    style={styles.badge}>{language}</Text>
+                    style={styles.badge} testID="language">{language}</Text>
                 </View>
                 }
                 { languages &&

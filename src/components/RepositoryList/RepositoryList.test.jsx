@@ -40,10 +40,25 @@ describe("RepositoryList", () => {
                     },
                 ]
             };
-            const { getAllByTestId, debug }
+            const { getAllByTestId }
             = render(<RepositoryListContainer repositories={repositories} />);
-            debug();
-            expect(getAllByTestId("mainItem")).toHaveLength(2);
+            expect(getAllByTestId("item")).toHaveLength(2);
+
+            expect(getAllByTestId("fullname")[0]).toHaveTextContent("jaredpalmer/formik");
+            expect(getAllByTestId("description")[0]).toHaveTextContent("Build forms in React, without the tears");
+            expect(getAllByTestId("language")[0]).toHaveTextContent("TypeScript");
+            expect(getAllByTestId("Forks")[0]).toHaveTextContent("1.6k");
+            expect(getAllByTestId("Stars")[0]).toHaveTextContent("21.9k");
+            expect(getAllByTestId("Reviews")[0]).toHaveTextContent("3");
+            expect(getAllByTestId("Rating")[0]).toHaveTextContent("88");
+
+            expect(getAllByTestId("fullname")[1]).toHaveTextContent("async-library/react-async");
+            expect(getAllByTestId("description")[1]).toHaveTextContent("Flexible promise-based React data loader");
+            expect(getAllByTestId("language")[1]).toHaveTextContent("JavaScript");
+            expect(getAllByTestId("Forks")[1]).toHaveTextContent("69");
+            expect(getAllByTestId("Stars")[1]).toHaveTextContent("1.8k");
+            expect(getAllByTestId("Reviews")[1]).toHaveTextContent("3");
+            expect(getAllByTestId("Rating")[1]).toHaveTextContent("72");
         });
     });
 });
