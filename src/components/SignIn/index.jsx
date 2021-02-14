@@ -6,11 +6,11 @@ import { useHistory } from "react-router-native";
 import { Formik } from "formik";
 import * as yup from "yup";
 
-import Text from "./Text";
-import FormikTextInput from "./FormikTextInput";
-import theme from "./theme";
-import useSignIn from "../hooks/useSignIn";
-import AuthStorageContext from "../contexts/AuthStorageContext";
+import Text from "../Text";
+import FormikTextInput from "../FormikTextInput";
+import theme from "../theme";
+import useSignIn from "../../hooks/useSignIn";
+import AuthStorageContext from "../../contexts/AuthStorageContext";
 
 const initialValues = {
     username: '',
@@ -65,12 +65,7 @@ const SignInForm = ({ onSubmit }) => {
     );
 };
 
-const SignInContainer = ({ onSubmit }) => {
-    
-};
-
-const SignIn = () => {
-    const [signIn] = useSignIn();
+export const SignInContainer = ({ signIn }) => {
     const history = useHistory();
     const authStorage = useContext(AuthStorageContext);
 
@@ -96,6 +91,12 @@ const SignIn = () => {
             } }
         </Formik>
     );
+};
+
+const SignIn = () => {
+    const [signIn] = useSignIn();
+    
+    return <SignInContainer signIn={signIn} />;
 };
 
 export default SignIn;
