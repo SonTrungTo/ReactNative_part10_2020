@@ -50,10 +50,10 @@ const styles = StyleSheet.create({
 const SignInForm = ({ onSubmit }) => {
     return (
         <View style={styles.container}>
-            <FormikTextInput name="username" placeholder="Username" />
-            <FormikTextInput name="password" placeholder="Password"
+            <FormikTextInput name="username" placeholder="Username" testID="username" />
+            <FormikTextInput name="password" placeholder="Password" testID="password"
             secureTextEntry />
-            <TouchableWithoutFeedback onPress={onSubmit}>
+            <TouchableWithoutFeedback onPress={onSubmit} testID="submitButton">
                 <Text
                 color="textBar"
                 fontWeight="bold"
@@ -65,7 +65,7 @@ const SignInForm = ({ onSubmit }) => {
     );
 };
 
-export const SignInContainer = ({ signIn }) => {
+export const SignInContainer = ({ signIn, isTest }) => {
     const history = useHistory();
     const authStorage = useContext(AuthStorageContext);
 
@@ -74,8 +74,10 @@ export const SignInContainer = ({ signIn }) => {
 
         try {
             await signIn({ username, password });
-            console.log(await authStorage.getAccessToken());
-            history.push('/');
+            if (!isTest) {
+                console.log(await authStorage.getAccessToken());
+                history.push('/');
+            }
         } catch (e) {
             console.log(e);
         }
