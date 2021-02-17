@@ -12,6 +12,7 @@ const styles = StyleSheet.create({
     }
 });
 
+// This is where 10.19 starts
 const RepositoryItem = ({ fullName,
 description, language, forksCount,
 stargazersCount, ratingAverage, reviewCount,

@@ -25,3 +25,13 @@ export const GET_AUTHORIZED_USER = gql`
     }
     ${ AUTHORIZED_USER }
 `;
+
+export const GET_REPOSITORY = gql`
+    query repoView($id: ID!) {
+        repository(id: $id) {
+            ...BASIC_INFO,
+            url
+        }
+    }
+    ${BASIC_INFO}
+`;

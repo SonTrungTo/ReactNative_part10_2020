@@ -6,6 +6,7 @@ import RepositoryList from "./RepositoryList";
 import SignIn from "./SignIn";
 import AppBar from "./AppBar";
 import AboutMe from "./AboutMe";
+import Repository from "./Repository";
 import theme from "./theme";
 
 const styles = StyleSheet.create({
@@ -29,6 +30,9 @@ const Main = () => {
                 </Route>
                 <Route path='/aboutme'>
                     <AboutMe />
+                </Route>
+                <Route path='/:id'>
+                    <Repository />
                 </Route>
                 <Redirect to='/' />
             </Switch>
