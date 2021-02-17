@@ -4,6 +4,7 @@ import { View, StyleSheet } from "react-native";
 import theme from "./theme";
 import Description from "./RepositoryListItem/Description";
 import Statistics from "./RepositoryListItem/Statistics";
+import GitHubButton from "./RepositoryListItem/GitHubButton";
 
 const styles = StyleSheet.create({
     container: {
@@ -16,7 +17,7 @@ const styles = StyleSheet.create({
 const RepositoryItem = ({ fullName,
 description, language, forksCount,
 stargazersCount, ratingAverage, reviewCount,
-ownerAvatarUrl }) => {
+ownerAvatarUrl, displayLink, url }) => {
     return (
         <View style={ styles.container } testID="item">
             <Description
@@ -31,6 +32,9 @@ ownerAvatarUrl }) => {
                 Reviews={reviewCount}
                 Rating={ratingAverage}
             />
+            { displayLink &&
+            <GitHubButton url={url} />
+            }
         </View>
     );
 };

@@ -7,7 +7,7 @@ import useRepository from "../../hooks/useRepository";
 const Repository = () => {
     const { repository }  = useRepository();
 
-    return <RepositoryItem {...repository} />;
+    return <RepositoryItem {...repository} displayLink />;
 };
 
 export default Repository;
