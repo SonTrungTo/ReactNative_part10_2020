@@ -38,6 +38,10 @@ const AppBar = () => {
                 <AppBarTab name="Sign In" to="/signin" />
                 }
                 { authorizedUser &&
+                <AppBarTab name="Create a review"
+                to="/create" />
+                }
+                { authorizedUser &&
                 <AppBarTab name="Sign Out"
                 onSubmit={logout}
                 style={styles.signOutTab}

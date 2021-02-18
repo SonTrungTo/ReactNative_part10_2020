@@ -7,6 +7,7 @@ import SignIn from "./SignIn";
 import AppBar from "./AppBar";
 import AboutMe from "./AboutMe";
 import Repository from "./Repository";
+import CreateReview from "./CreateReview";
 import theme from "./theme";
 
 const styles = StyleSheet.create({
@@ -30,6 +31,9 @@ const Main = () => {
                 </Route>
                 <Route path='/aboutme'>
                     <AboutMe />
+                </Route>
+                <Route path='/create'>
+                    <CreateReview />
                 </Route>
                 <Route path='/:id'>
                     <Repository />
