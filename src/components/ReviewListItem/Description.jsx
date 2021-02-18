@@ -1,5 +1,6 @@
 import React from "react";
 import { View, StyleSheet } from "react-native";
+import { format } from "date-fns";
 
 import Rating from "./Rating";
 import Text from "../Text";
@@ -22,8 +23,6 @@ const styles = StyleSheet.create({
     }
 });
 
-// createdAt needs to be in proper format, to be using date-fns library
-
 const Description = ({ text, createdAt,
 rating, user }) => {
     return (
@@ -36,7 +35,7 @@ rating, user }) => {
                 </Text>
                 <Text color="textSecondary"
                 style={styles.date}>
-                    {createdAt}
+                    {format(new Date(createdAt), 'dd.MM.yyyy')}
                 </Text>
                 <Text style={styles.review}>
                     {text}
