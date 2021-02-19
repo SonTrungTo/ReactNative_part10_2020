@@ -7,6 +7,7 @@ import * as yup from "yup";
 import FormikTextInput from "../FormikTextInput";
 import Text from "../Text";
 import theme from "../theme";
+import useCreateReview from "../../hooks/useCreateReview";
 
 const styles = StyleSheet.create({
     container: {
@@ -70,8 +71,21 @@ const CreateReviewForm = ({ onSubmit }) => {
 };
 
 const CreateReview = () => {
-    const onSubmit = () => {
-        console.log("Clicked!");
+    const [createReview] = useCreateReview();
+
+    const onSubmit = async (values) => {
+        const { repositoryName, repositoryOwner, rating, text } = values;
+        
+        try {
+            await createReview({
+                repositoryName,
+                repositoryOwner,
+                rating,
+                text 
+            });
+        } catch (e) {
+            console.log(e);
+        }
     };
 
     return (
