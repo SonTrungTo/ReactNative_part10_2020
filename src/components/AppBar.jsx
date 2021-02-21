@@ -37,6 +37,9 @@ const AppBar = () => {
                 { !authorizedUser &&
                 <AppBarTab name="Sign In" to="/signin" />
                 }
+                { !authorizedUser &&
+                <AppBarTab name="Sign Up" to="/signup" />
+                }
                 { authorizedUser &&
                 <AppBarTab name="Create a review"
                 to="/create" />
