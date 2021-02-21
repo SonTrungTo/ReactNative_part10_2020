@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
 import { GET_REPOSITORIES } from "../graphql/queries";
-import { useQuery } from "@apollo/react-hooks";
+import { useLazyQuery } from "@apollo/react-hooks";
 
-const useRepositories = () => {
+const useRepositories = ({orderBy, orderDirection}) => {
     const [repositories, setRepositories] = useState(undefined);
-    const { data, loading } = useQuery(GET_REPOSITORIES, {
+    const [getRepositories, { data, loading }] = useLazyQuery(GET_REPOSITORIES, {
         fetchPolicy: 'cache-and-network'
     });
 
@@ -13,6 +13,10 @@ const useRepositories = () => {
             setRepositories(data.repositories);
         }
     };
+
+    useEffect(() => {
+        getRepositories({ variables: { orderBy, orderDirection }});
+    }, [orderBy, orderDirection]);
 
     useEffect(() => {
         fetchRepositories();

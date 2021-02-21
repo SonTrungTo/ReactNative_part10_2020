@@ -1,19 +1,24 @@
-import React from "react";
+import React, { useState } from "react";
 import { FlatList, View, StyleSheet, TouchableOpacity } from "react-native";
 import RepositoryItem from "../RepositoryItem";
+import SortingRepositories from "../SortingRepositories";
 import { useHistory } from "react-router-native";
 
 import useRepositories from "../../hooks/useRepositories";
+import theme from "../theme";
 
 const styles = StyleSheet.create({
     separator: {
         height: 10
+    },
+    sortingRepositoriesHeader: {
+        backgroundColor: theme.colors.mainBackgroundColor
     }
 });
 
 const ItemSeparator = () => <View style={styles.separator} />;
 
-export const RepositoryListContainer = ({ repositories }) => {
+export const RepositoryListContainer = ({ repositories, setOption, option }) => {
     const history = useHistory();
 
     const repositoryNodes = repositories ?
@@ -29,6 +34,7 @@ export const RepositoryListContainer = ({ repositories }) => {
     return (
         <FlatList
             data={repositoryNodes}
+            ListHeaderComponent={() => <SortingRepositories setOption={setOption} option={option} />}
             ItemSeparatorComponent={ItemSeparator}
             renderItem={renderRepo}
             keyExtractor={item => item.id}
@@ -37,9 +43,11 @@ export const RepositoryListContainer = ({ repositories }) => {
 };
 
 const RepositoryList = () => {
-  const { repositories } = useRepositories();
+    const [orderArguments, setOrderArguments] = useState({});
+    const { repositories } = useRepositories(orderArguments);
 
-  return <RepositoryListContainer repositories={repositories} />;
+    return <RepositoryListContainer repositories={repositories}
+    setOption={setOrderArguments} option={orderArguments} />;
 };
 
 export default RepositoryList;

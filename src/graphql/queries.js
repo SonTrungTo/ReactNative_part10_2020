@@ -4,8 +4,9 @@ import { BASIC_INFO } from "./fragments";
 import { AUTHORIZED_USER } from "./fragments";
 
 export const GET_REPOSITORIES = gql`
-    query {
-        repositories {
+    query fetchRepositories($orderBy: AllRepositoriesOrderBy,
+    $orderDirection: OrderDirection){
+        repositories(orderBy: $orderBy, orderDirection: $orderDirection) {
             edges {
                 node {
                     ...BASIC_INFO
