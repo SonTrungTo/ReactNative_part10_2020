@@ -12,7 +12,8 @@ const styles = StyleSheet.create({
         height: 10
     },
     sortingRepositoriesHeader: {
-        backgroundColor: theme.colors.mainBackgroundColor
+        backgroundColor: theme.colors.mainBackgroundColor,
+        padding: 10
     }
 });
 
@@ -35,6 +36,7 @@ export const RepositoryListContainer = ({ repositories, setOption, option }) => 
         <FlatList
             data={repositoryNodes}
             ListHeaderComponent={() => <SortingRepositories setOption={setOption} option={option} />}
+            ListHeaderComponentStyle={styles.sortingRepositoriesHeader}
             ItemSeparatorComponent={ItemSeparator}
             renderItem={renderRepo}
             keyExtractor={item => item.id}

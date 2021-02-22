@@ -4,23 +4,20 @@ import { useLazyQuery } from "@apollo/react-hooks";
 
 const useRepositories = ({orderBy, orderDirection}) => {
     const [repositories, setRepositories] = useState(undefined);
-    const [getRepositories, { data, loading }] = useLazyQuery(GET_REPOSITORIES, {
-        fetchPolicy: 'cache-and-network'
+    const [getRepositories, {loading}] = useLazyQuery(GET_REPOSITORIES, {
+        fetchPolicy: 'cache-and-network',
+        onCompleted: (data) => {
+            setRepositories(data.repositories);
+        }
     });
 
     const fetchRepositories = () => {
-        if (!loading) {
-            setRepositories(data.repositories);
-        }
+        getRepositories({ variables: { orderBy, orderDirection }});
     };
 
     useEffect(() => {
-        getRepositories({ variables: { orderBy, orderDirection }});
-    }, [orderBy, orderDirection]);
-
-    useEffect(() => {
         fetchRepositories();
-    }, [loading]);
+    }, [orderBy, orderDirection]);
 
     return { repositories, loading, refetch: fetchRepositories };
 };

@@ -1,18 +1,21 @@
 import React from "react";
-import { Picker } from "@react-native-picker/picker";
+import RNPickerSelect from "react-native-picker-select";
 
 const SortingRepositories = ({ setOption, option }) => {
     return (
-        <Picker
-        selectedValue={option}
-        onValueChange={ (value) => setOption(value) }
-        placeholder={'Select an item...'}>
-            <Picker.Item label='Latest repositories' value={{orderBy: 'CREATED_AT'}} />
-            <Picker.Item label='Highest rated repositories'
-                value={{orderBy: 'RATING_AVERAGE', orderDirection: 'DESC'}} />
-            <Picker.Item label='Lowest rated repositories'
-                value={{orderBy: 'RATING_AVERAGE', orderDirection: 'ASC'}} />
-        </Picker>
+        <RNPickerSelect
+        onValueChange={ (value) => {
+            if (value) {
+                setOption(value);
+            }
+        } }
+        items={[
+            {label: 'Latest repositories', value: {orderBy: 'CREATED_AT', orderDirection: 'DESC'}},
+            {label: 'Highest rated repositories', value: {orderBy: 'RATING_AVERAGE', orderDirection: 'DESC'}},
+            {label: 'Lowest rated repositories', value: {orderBy: 'RATING_AVERAGE', orderDirection: 'ASC'}}
+        ]}
+        value={option}
+        />
     );
 };
 
