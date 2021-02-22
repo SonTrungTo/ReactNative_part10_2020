@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { FlatList, View, StyleSheet, TouchableOpacity } from "react-native";
 import RepositoryItem from "../RepositoryItem";
-import SortingRepositories from "../SortingRepositories";
+import RepositoryListHeader from "../RepositoryListHeader";
 import { useHistory } from "react-router-native";
 
 import useRepositories from "../../hooks/useRepositories";
@@ -11,7 +11,7 @@ const styles = StyleSheet.create({
     separator: {
         height: 10
     },
-    sortingRepositoriesHeader: {
+    repositoryListHeader: {
         backgroundColor: theme.colors.mainBackgroundColor,
         padding: 10
     }
@@ -35,8 +35,8 @@ export const RepositoryListContainer = ({ repositories, setOption, option }) => 
     return (
         <FlatList
             data={repositoryNodes}
-            ListHeaderComponent={() => <SortingRepositories setOption={setOption} option={option} />}
-            ListHeaderComponentStyle={styles.sortingRepositoriesHeader}
+            ListHeaderComponent={() => <RepositoryListHeader setOption={setOption} option={option} />}
+            ListHeaderComponentStyle={styles.repositoryListHeader}
             ItemSeparatorComponent={ItemSeparator}
             renderItem={renderRepo}
             keyExtractor={item => item.id}

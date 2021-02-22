@@ -1,7 +1,8 @@
 import React from "react";
+import { View, StyleSheet } from "react-native";
 import RNPickerSelect from "react-native-picker-select";
 
-const SortingRepositories = ({ setOption, option }) => {
+const RepositoryListHeader = ({ setOption, option }) => {
     return (
         <RNPickerSelect
         onValueChange={ (value) => {
@@ -19,4 +20,4 @@ const SortingRepositories = ({ setOption, option }) => {
     );
 };
 
-export default SortingRepositories;
+export default RepositoryListHeader;
