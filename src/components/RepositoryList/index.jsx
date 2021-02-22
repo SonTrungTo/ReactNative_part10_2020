@@ -19,37 +19,54 @@ const styles = StyleSheet.create({
 
 const ItemSeparator = () => <View style={styles.separator} />;
 
-export const RepositoryListContainer = ({ repositories, setOption, option }) => {
-    const history = useHistory();
+export class RepositoryListContainer extends React.Component {
+    renderHeader = () => {
+        const { option, setOption } = this.props;
 
-    const repositoryNodes = repositories ?
-    repositories.edges.map(edge => edge.node)
-    : [];
+        return (
+            <RepositoryListHeader
+            option={option}
+            setOption={setOption} />
+        );
+    };
 
-    const renderRepo = ({ item }) => (
-        <TouchableOpacity onPress={ () => history.push(`/${item.id}`) }>
-            <RepositoryItem {...item} />
-        </TouchableOpacity>
-    );
+    renderRepo = ({ item }) => {
+        const { history } = this.props;
 
-    return (
-        <FlatList
-            data={repositoryNodes}
-            ListHeaderComponent={() => <RepositoryListHeader setOption={setOption} option={option} />}
-            ListHeaderComponentStyle={styles.repositoryListHeader}
-            ItemSeparatorComponent={ItemSeparator}
-            renderItem={renderRepo}
-            keyExtractor={item => item.id}
-        />
-    );
-};
+        return (
+            <TouchableOpacity onPress={ () => history.push(`/${item.id}`) }>
+                <RepositoryItem {...item} />
+            </TouchableOpacity>
+        );
+    };
+
+    render() {
+        const { repositories } = this.props;
+
+        const repositoryNodes = repositories ?
+        repositories.edges.map(edge => edge.node)
+        : [];
+
+        return (
+            <FlatList
+                data={repositoryNodes}
+                ListHeaderComponent={this.renderHeader}
+                ListHeaderComponentStyle={styles.repositoryListHeader}
+                ItemSeparatorComponent={ItemSeparator}
+                renderItem={this.renderRepo}
+                keyExtractor={item => item.id}
+            />
+        ); 
+    }
+}
 
 const RepositoryList = () => {
     const [orderArguments, setOrderArguments] = useState({});
     const { repositories } = useRepositories(orderArguments);
+    const history = useHistory();
 
     return <RepositoryListContainer repositories={repositories}
-    setOption={setOrderArguments} option={orderArguments} />;
+    setOption={setOrderArguments} option={orderArguments} history={history} />;
 };
 
 export default RepositoryList;
