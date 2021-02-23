@@ -63,11 +63,13 @@ export class RepositoryListContainer extends React.Component {
 }
 
 const RepositoryList = () => {
-    const [orderArguments, setOrderArguments] = useState({});
-    const { repositories } = useRepositories(orderArguments);
+    const [orderArguments, setOrderArguments] = useState({
+        first: 4
+    });
+    const { repositories, fetchMore } = useRepositories(orderArguments);
     const history = useHistory();
     const onEndReach = () => {
-        console.log('You have reached the end of the list');
+        fetchMore();
     };
 
     return <RepositoryListContainer

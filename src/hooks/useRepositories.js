@@ -1,24 +1,22 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { GET_REPOSITORIES } from "../graphql/queries";
 import { useLazyQuery } from "@apollo/react-hooks";
 import { useDebounce } from "use-debounce";
 
-const useRepositories = ({orderBy, orderDirection, text}) => {
-    const [repositories, setRepositories] = useState(undefined);
+const useRepositories = (variables) => {
+    const { orderBy, orderDirection, text, first } = variables;
     const [delayedText] = useDebounce(text, 500);
-    const [getRepositories, {loading}] = useLazyQuery(GET_REPOSITORIES, {
+    const [getRepositories, { data, loading, fetchMore }] = useLazyQuery(GET_REPOSITORIES, {
         fetchPolicy: 'cache-and-network',
-        onCompleted: (data) => {
-            setRepositories(data.repositories);
-        }
+        variables
     });
 
     const fetchRepositories = () => {
-        getRepositories({ variables: { orderBy, orderDirection, text }});
+        getRepositories({ variables: { orderBy, orderDirection, text, first }});
     };
 
     const filteredRepositories = () => {
-        getRepositories({ variables: { text: delayedText, orderBy, orderDirection } });
+        getRepositories({ variables: { text: delayedText, orderBy, orderDirection, first } });
     };
 
     useEffect(() => {
@@ -29,7 +27,41 @@ const useRepositories = ({orderBy, orderDirection, text}) => {
         filteredRepositories();
     }, [delayedText]);
 
-    return { repositories, loading, refetch: fetchRepositories };
+    const handleFetchMore = () => {
+        const canFetchMore =
+        !loading && data && data.repositories.pageInfo.hasNextPage;
+
+        if (!canFetchMore) {
+            return;
+        }
+
+        fetchMore({
+            query: GET_REPOSITORIES,
+            variables: {
+                ...variables,
+                after: data.repositories.pageInfo.endCursor
+            },
+            updateQuery: (previousResult, { fetchMoreResult }) => {
+                const nextResult = {
+                    repositories: {
+                        ...fetchMoreResult.repositories,
+                        edges: [
+                            ...previousResult.repositories.edges,
+                            ...fetchMoreResult.repositories.edges
+                        ]
+                    }
+                };
+
+                return nextResult;
+            }
+        });
+    };
+
+    return {
+        repositories: data ? data.repositories : undefined,
+        loading,
+        fetchMore: handleFetchMore
+    };
 };
 
 export default useRepositories;

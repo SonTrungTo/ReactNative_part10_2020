@@ -5,9 +5,16 @@ import { AUTHORIZED_USER } from "./fragments";
 
 export const GET_REPOSITORIES = gql`
     query fetchRepositories($orderBy: AllRepositoriesOrderBy,
-    $orderDirection: OrderDirection, $text: String) {
+    $orderDirection: OrderDirection, $text: String, $first: Int,
+    $after: String) {
         repositories(orderBy: $orderBy, orderDirection: $orderDirection,
-        searchKeyword: $text) {
+        searchKeyword: $text, first: $first, after: $after) {
+            pageInfo {
+                hasNextPage
+                endCursor
+                totalCount
+                startCursor
+            }
             edges {
                 node {
                     ...BASIC_INFO
