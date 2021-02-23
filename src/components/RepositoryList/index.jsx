@@ -41,7 +41,7 @@ export class RepositoryListContainer extends React.Component {
     };
 
     render() {
-        const { repositories } = this.props;
+        const { repositories, onEndReach } = this.props;
 
         const repositoryNodes = repositories ?
         repositories.edges.map(edge => edge.node)
@@ -55,6 +55,8 @@ export class RepositoryListContainer extends React.Component {
                 ItemSeparatorComponent={ItemSeparator}
                 renderItem={this.renderRepo}
                 keyExtractor={item => item.id}
+                onEndReached={onEndReach}
+                onEndReachedThreshold={0.5}
             />
         ); 
     }
@@ -64,9 +66,16 @@ const RepositoryList = () => {
     const [orderArguments, setOrderArguments] = useState({});
     const { repositories } = useRepositories(orderArguments);
     const history = useHistory();
+    const onEndReach = () => {
+        console.log('You have reached the end of the list');
+    };
 
-    return <RepositoryListContainer repositories={repositories}
-    setOption={setOrderArguments} option={orderArguments} history={history} />;
+    return <RepositoryListContainer
+    repositories={repositories}
+    setOption={setOrderArguments}
+    option={orderArguments}
+    history={history}
+    onEndReach={onEndReach} />;
 };
 
 export default RepositoryList;
