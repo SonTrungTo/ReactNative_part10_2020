@@ -1,13 +1,12 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { GET_REVIEWS } from "../graphql/queries";
 import { useLazyQuery } from "@apollo/react-hooks";
-import { useParams } from "react-router-native";
 
-const useReviews = () => {
-    const { id } = useParams();
-    const [reviews, setReviews] = useState(undefined);
-    const [getReviews, { loading, data }] = useLazyQuery(GET_REVIEWS, {
-        fetchPolicy: 'cache-and-network'
+const useReviews = (variables) => {
+    const { id } = variables;
+    const [getReviews, { loading, data, fetchMore }] = useLazyQuery(GET_REVIEWS, {
+        fetchPolicy: 'cache-and-network',
+        variables
     });
 
     const fetchReviews = (id) => {
@@ -18,13 +17,45 @@ const useReviews = () => {
         fetchReviews(id);
     }, []);
 
-    useEffect(() => {
-        if (!loading && data) {
-            setReviews(data.repository.reviews);
-        }
-    }, [loading]);
+    const handleFetchMore = () => {
+        const canFetchMore =
+        !loading && data && data.repository.reviews.pageInfo.hasNextPage;
 
-    return { reviews, loading, refetch: fetchReviews };
+        if (!canFetchMore) {
+            return;
+        }
+
+        fetchMore({
+            query: GET_REVIEWS,
+            variables: {
+                ...variables,
+                after: data.repository.reviews.pageInfo.endCursor
+            },
+            updateQuery: (previousResult, { fetchMoreResult }) => {
+                const nextResult = {
+                    repository: {
+                        ...fetchMoreResult.repository,
+                        reviews: {
+                            ...fetchMoreResult.repository.reviews,
+                            edges: [
+                                ...previousResult.repository.reviews.edges,
+                                ...fetchMoreResult.repository.reviews.edges
+                            ]
+                        }
+                    }
+                };
+
+                return nextResult;
+            }
+        });
+    };
+
+    return {
+        reviews: data ? data.repository.reviews : undefined,
+        loading,
+        refetch: fetchReviews,
+        fetchMore: handleFetchMore
+    };
 };
 
 export default useReviews;

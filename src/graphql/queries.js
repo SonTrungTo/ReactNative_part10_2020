@@ -46,11 +46,18 @@ export const GET_REPOSITORY = gql`
 `;
 
 export const GET_REVIEWS = gql`
-    query fetchReviews($id: ID!) {
+    query fetchReviews($id: ID!, $first: Int,
+    $after: String) {
         repository(id: $id) {
             id
             fullName
-            reviews {
+            reviews(first: $first, after: $after) {
+                pageInfo {
+                    hasNextPage
+                    endCursor
+                    startCursor
+                    totalCount
+                }
                 edges {
                     node {
                         id

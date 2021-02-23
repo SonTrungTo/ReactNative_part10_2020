@@ -1,5 +1,6 @@
 import React from "react";
 import { FlatList, View, StyleSheet } from "react-native";
+import { useParams } from "react-router-native";
 
 import RepositoryItem from "../RepositoryItem";
 import Description from "../ReviewListItem/Description";
@@ -37,7 +38,15 @@ const ReviewItem = ({ review }) => {
 
 const Repository = () => {
     const { repository }  = useRepository();
-    const { reviews } = useReviews();
+    const { id } = useParams();
+    const { reviews, fetchMore } = useReviews({
+        first: 3,
+        id
+    });
+
+    const onEndReach = () => {
+        fetchMore();
+    };
 
     const reviewNodes = reviews ?
     reviews.edges.map(review => review.node) : [];
@@ -49,7 +58,9 @@ const Repository = () => {
         ListHeaderComponentStyle={styles.header}
         ItemSeparatorComponent={ReviewItemSeparator}
         keyExtractor={({ id }) => id}
-        renderItem={({ item }) => <ReviewItem review={item} />} />
+        renderItem={({ item }) => <ReviewItem review={item} />}
+        onEndReached={onEndReach}
+        onEndReachedThreshold={0.5} />
     );
 };
 
