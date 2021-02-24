@@ -18,7 +18,7 @@ const styles = StyleSheet.create({
     scrollView: {
         flexGrow: 1,
         justifyContent: 'space-around',
-        width: 600
+        width: 750
     },
     signOutTab: {
         backgroundColor: theme.colors.error,
@@ -27,7 +27,9 @@ const styles = StyleSheet.create({
 });
 
 const AppBar = () => {
-    const { authorizedUser } = useAuthorizedUser();
+    const { authorizedUser } = useAuthorizedUser({
+        includeReviews: false
+    });
     const { logout } = useLogOut();
 
     return (
@@ -43,6 +45,10 @@ const AppBar = () => {
                 { authorizedUser &&
                 <AppBarTab name="Create a review"
                 to="/create" />
+                }
+                { authorizedUser &&
+                <AppBarTab name="My reviews"
+                to="/user/reviews" />
                 }
                 { authorizedUser &&
                 <AppBarTab name="Sign Out"

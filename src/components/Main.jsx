@@ -9,6 +9,7 @@ import AboutMe from "./AboutMe";
 import Repository from "./Repository";
 import CreateReview from "./CreateReview";
 import SignUp from "./SignUp";
+import UserReviewList from "./UserReviewList";
 import theme from "./theme";
 
 const styles = StyleSheet.create({
@@ -24,6 +25,9 @@ const Main = () => {
         <View style={styles.container}>
             <AppBar />
             <Switch>
+                <Route path='/user/reviews'>
+                    <UserReviewList />
+                </Route>
                 <Route path='/' exact>
                     <RepositoryList />
                 </Route>

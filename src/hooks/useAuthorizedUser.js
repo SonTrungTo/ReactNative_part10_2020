@@ -1,24 +1,57 @@
-import { useEffect, useState } from "react";
 import { useQuery } from "@apollo/react-hooks";
 import { GET_AUTHORIZED_USER } from "../graphql/queries";
 
-const useAuthorizedUser = () => {
-    const [authorizedUser, setAuthorizedUser] = useState(undefined);
-    const { data, loading } = useQuery(GET_AUTHORIZED_USER, {
-        fetchPolicy: 'cache-and-network'
+const useAuthorizedUser = (variables) => {
+    const { includeReviews } = variables;
+    const { data, loading, fetchMore } = useQuery(GET_AUTHORIZED_USER, {
+        fetchPolicy: 'cache-and-network',
+        variables
     });
 
-    const fetchAuthorizedUser = () => {
-        if (!loading) {
-            setAuthorizedUser(data.authorizedUser);
+    const handleFetchMore = () => {
+        const canFetchMore =
+        includeReviews
+        && !loading
+        && data
+        && data.authorizedUser.reviews.pageInfo.hasNextPage;
+
+        if (!canFetchMore) {
+            return;
         }
+
+        fetchMore({
+            query: GET_AUTHORIZED_USER,
+            variables: {
+                ...variables,
+                after: data.authorizedUser.reviews.pageInfo.endCursor
+            },
+            updateQuery: (previousResult, { fetchMoreResult }) => {
+                const nextResult = {
+                    authorizedUser: {
+                        ...fetchMoreResult.authorizedUser,
+                        reviews: {
+                            ...fetchMoreResult.authorizedUser.reviews,
+                            edges: [
+                                ...previousResult.authorizedUser.reviews.edges,
+                                ...fetchMoreResult.authorizedUser.reviews.edges
+                            ]
+                        }
+                    }
+                };
+
+                return nextResult;
+            }
+        });
     };
 
-    useEffect(() => {
-        fetchAuthorizedUser();
-    }, [loading]);
-
-    return { authorizedUser, loading, refetch: fetchAuthorizedUser };
+    return {
+        authorizedUser: data ? data.authorizedUser : undefined,
+        reviews: data ?
+        (data.authorizedUser ? data.authorizedUser.reviews : undefined)
+        : undefined,
+        loading,
+        fetchMore: handleFetchMore
+    };
 };
 
 export default useAuthorizedUser;

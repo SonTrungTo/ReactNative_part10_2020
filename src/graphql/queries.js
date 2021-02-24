@@ -27,9 +27,31 @@ export const GET_REPOSITORIES = gql`
 `;
 
 export const GET_AUTHORIZED_USER = gql`
-    query {
+    query getAuthorizedUser($includeReviews: Boolean = false,
+    $first: Int, $after: String) {
         authorizedUser {
-            ...AUTHORIZED_USER
+            ...AUTHORIZED_USER,
+            reviews(first: $first, after: $after) @include(if: $includeReviews) {
+                pageInfo {
+                    hasNextPage
+                    startCursor
+                    endCursor
+                    totalCount
+                }
+                edges {
+                    node {
+                        id
+                        text
+                        createdAt
+                        rating
+                        user {
+                            id
+                            username
+                        }
+                    }
+                    cursor
+                }
+            }
         }
     }
     ${ AUTHORIZED_USER }
