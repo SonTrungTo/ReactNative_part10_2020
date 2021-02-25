@@ -1,10 +1,11 @@
 import React from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, View, TouchableOpacity } from "react-native";
 import { Link } from "react-router-native";
 
 import Description from "../ReviewListItem/Description";
 import Text from "../Text";
 import theme from "../theme";
+import useDeleteReview from "../../hooks/useDeleteReview";
 
 const styles = StyleSheet.create({
     container: {
@@ -32,10 +33,12 @@ const styles = StyleSheet.create({
 });
 
 const ReviewItem = ({ review, withButtons }) => {
+    const [deleteReview] = useDeleteReview();
+
     return (
         <View style={styles.container}>
             <Description {...review} />
-            { withButtons && 
+            { withButtons &&
             <View style={styles.containerButton}>
                 <Link to={`/${review.repository.id}`}>
                     <Text
@@ -45,12 +48,14 @@ const ReviewItem = ({ review, withButtons }) => {
                         View Repository
                     </Text>
                 </Link>
-                <Text
-                color="textBar"
-                fontWeight="bold"
-                style={styles.deleteButton}>
-                    Delete Review
-                </Text>
+                <TouchableOpacity onPress={ () => deleteReview(review.id) }>
+                    <Text
+                    color="textBar"
+                    fontWeight="bold"
+                    style={styles.deleteButton}>
+                        Delete Review
+                    </Text>
+                </TouchableOpacity>
             </View>
             }
         </View>
