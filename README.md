@@ -1,3 +1,4 @@
 ## This is a Repository Rating App
 
-as a part of FullStack Open 2020 part 10...
+The app is finished! The remaining step is to deploy to Google Store,
+which I am a little bit lazy.

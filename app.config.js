@@ -20,6 +20,10 @@ export default {
   ios: {
     supportsTablet: true
   },
+  android: {
+    package: "rating.repository.app.com",
+    version: 1
+  },
   web: {
     favicon: "./assets/favicon.png"
   },
