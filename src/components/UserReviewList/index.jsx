@@ -22,7 +22,7 @@ const UserReviewList = () => {
         <FlatList
         data={reviewNodes}
         ItemSeparatorComponent={ReviewItemSeparator}
-        renderItem={({ item }) => <ReviewItem review={item} />}
+        renderItem={({ item }) => <ReviewItem review={item} withButtons />}
         keyExtractor={({ id }) => id}
         onEndReached={onEndReach}
         onEndReachedThreshold={0.5} />
